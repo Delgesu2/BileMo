@@ -1,0 +1,9 @@
+App\Entity\Customer:
+    customer_{1..20}:
+        firstName: <name()>
+        lastName:  <name()>
+        address: 'Adresse'
+        zipcode: '45370'
+        city: 'City'
+        phoneNumber: '654987+<current()>'
+        email: 'email+<current()>\@email.com'

@@ -1,0 +1,6 @@
+App\Entity\Phone:
+    phone_{1..20}:
+        brand: 'Brand'
+        reference: 'reference+<current()>'
+        description: 'Ceci est un objet.'
+        price: '120 €'

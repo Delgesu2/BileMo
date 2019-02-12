@@ -1,0 +1,5 @@
+App\Entity\Client:
+    client_{1..20}:
+        name: <name()>
+        email: 'email+<current()>\@email.com'
+        phoneNumber: '58479325+<current()>'
