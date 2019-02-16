@@ -3,14 +3,48 @@
 namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
+use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Customer
  *
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={
+ *        "get"={"access_control"="object.client == user"},
+ *        "post"
+ *
+ * },
+ *     itemOperations={
+ *         "get"={"access_control"="object.client == user"},
+ *         "delete",
+ *         "put"
+ *     }
+ *)
+ *
+ *
  * @ORM\Entity
+ *
+ * @Hateoas\Relation(
+ *     "self",
+ *     href = @Hateoas\Route(
+ *         "customer_show",
+ *         parameters = { "id" = "expr(object.getId())" },
+ *         absolute = true
+ *     )
+ * )
+ *
+ * @Hateoas\Relation(
+ *     "delete_a_customer",
+ *     href = @Hateoas\Route(
+ *         "customer_del",
+ *         parameters = { "id" = "expr(object.getId())" },
+ *         absolute = true
+ *     )
+ * )
+ *
  */
 class Customer
 {
@@ -19,6 +53,7 @@ class Customer
      *
      * @ORM\Id
      * @ORM\Column(type="guid")
+     *
      */
     private $id;
 
@@ -33,6 +68,8 @@ class Customer
      * @var string Customer Last Name
      *
      * @ORM\Column(type="string", length=60, unique=false)
+     *
+     * @Assert\NotBlank(message="Il faut renseigner au minimum le nom de famille")
      */
     private $lastName;
 
@@ -46,7 +83,7 @@ class Customer
     /**
      * @var string Customer's adress zipcode
      *
-     * @ORM\Column(type="string", length=8)
+     * @ORM\Column(type="string", length=15)
      */
     private $zipcode;
 
@@ -54,13 +91,17 @@ class Customer
      * @var string City where the Customer lives
      *
      * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\NotBlank()
      */
     private $city;
 
     /**
      * @var string Customer phone number
      *
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=25)
+     *
+     * @Assert\NotBlank()
      */
     private $phoneNumber;
 
@@ -68,13 +109,15 @@ class Customer
      * @var string Customer email
      *
      * @ORM\Column(type="string", length=40)
+     *
+     * @Assert\Email(message="Adresse courriel non valide.")
      */
     private $email;
 
     /**
-     * @var \DateTime When the customer entity has been created
+     * @var \DateTimeInterface When the customer entity has been created
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable")
      */
     private $createdAt;
 
@@ -94,7 +137,7 @@ class Customer
     public function __construct()
     {
         $this->id       = Uuid::uuid4();
-        $this->createAt = new \DateTime();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     /**
@@ -218,17 +261,17 @@ class Customer
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param \DateTimeInterface $createdAt
      */
-    public function setCreatedAt(\DateTime $createdAt): void
+    public function setCreatedAt(\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -248,7 +291,5 @@ class Customer
     {
         $this->client = $client;
     }
-
-
 
 }

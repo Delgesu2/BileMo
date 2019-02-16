@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Client
  *
- * @ApiResource
  * @ORM\Entity
  */
 class Client
@@ -19,6 +19,7 @@ class Client
      *
      * @ORM\Id
      * @ORM\Column(type="guid")
+     *
      */
     private $id;
 
@@ -26,6 +27,8 @@ class Client
      * @var string Client name
      *
      * @ORM\Column(type="string", length=60, unique=true)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -33,20 +36,32 @@ class Client
      * @var string Client email address
      *
      * @ORM\Column(type="string", length=60, unique=true)
+     *
+     * @Assert\NotBlank()
+     *
+     * @Assert\Email(message="Adresse courriel non valide.")
      */
     private $email;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Donner un mot-de-passe")
+     */
+    private $password;
+
+    /**
      * @var string CLient phone number
      *
-     * @ORM\Column(type="string", length=12, unique=true)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
     private $phoneNumber;
 
     /**
      * @var \DateTimeImmutable
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable")
      */
     private $createAt;
 
@@ -63,7 +78,7 @@ class Client
     public function __construct()
     {
         $this->id       = Uuid::uuid4();
-        $this->createAt = new \DateTime();
+        $this->createAt = new \DateTimeImmutable();
     }
 
     /**
@@ -104,6 +119,22 @@ class Client
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     /**

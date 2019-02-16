@@ -1,9 +1,10 @@
 App\Entity\Customer:
     customer_{1..20}:
-        firstName: <name()>
-        lastName:  <name()>
-        address: 'Adresse'
-        zipcode: '45370'
-        city: 'City'
-        phoneNumber: '654987+<current()>'
-        email: 'email+<current()>\@email.com'
+        firstName: <firstName()>
+        lastName:  <lastName()>
+        address: <secondaryAddress()>
+        zipcode: <postcode()>
+        city: <city()>
+        phoneNumber: <phoneNumber()>
+        email: 'email<current()>\@email.com'
+        client: '@client_<current()>'

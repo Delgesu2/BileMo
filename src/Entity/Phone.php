@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
+use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource
  * @ORM\Entity
  *
+ * @Hateoas\Relation(
+ *     "self",
+ *     href = @Hateoas\Route(
+ *         "phone_show",
+ *         parameters = { "id" = "expr(object.getId())" },
+ *         absolute = true
+ *     )
+ * )
+ *
  */
 class Phone
 {
@@ -20,6 +31,7 @@ class Phone
      *
      * @ORM\Id()
      * @ORM\Column(type="guid")
+     *
      */
     private $id;
 
@@ -27,6 +39,8 @@ class Phone
      * @var string Phone brand
      *
      * @ORM\Column(type="string", length=60)
+     *
+     * @Assert\NotBlank()
      */
     private $brand;
 
@@ -34,6 +48,8 @@ class Phone
      * @var string Phone reference
      *
      * @ORM\Column(type="string", length=100)
+     *
+     * @Assert\NotBlank()
      */
     private $reference;
 
@@ -48,6 +64,8 @@ class Phone
      * @var string Phone price
      *
      * @ORM\Column(type="string", length=7)
+     *
+     * @Assert\NotBlank()
      */
     private $price;
 
