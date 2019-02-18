@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomAssert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Client
  *
  * @ORM\Entity
+ *
+ *
  */
-class Client
+class Client implements UserInterface
 {
     /**
      * @var string Client id
@@ -43,11 +47,16 @@ class Client
      */
     private $email;
 
+
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
      * @Assert\NotBlank(message="Donner un mot-de-passe")
+     *
+     * @CustomAssert\Password
+     *
      */
     private $password;
 
@@ -124,6 +133,22 @@ class Client
     /**
      * @return string
      */
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return string
+     */
     public function getPassword(): string
     {
         return $this->password;
@@ -183,6 +208,26 @@ class Client
     public function setCustomers($customers): void
     {
         $this->customers = $customers;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
     }
 
 }
