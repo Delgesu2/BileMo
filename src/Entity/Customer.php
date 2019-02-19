@@ -13,14 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ApiResource(
  *     collectionOperations={
- *        "get"={"access_control"="object.client == user"},
- *        "post"
+ *        "get"={"access_control"="object.client == user", "access_control_message" =
+ *        "Vous n'avez pas accès à la liste." },
+ *        "post"={"access_control" = "Vous ne pouvez effectuer cette action."}
  *
  * },
  *     itemOperations={
- *         "get"={"access_control"="object.client == user"},
- *         "delete",
- *         "put"
+ *         "get"={"access_control"="object.client == user", "access_control_message" =
+ *         "Vous n'avez pas l'autorisation d'obtenir cette information."},
+ *         "delete"={"access_control" = "Vous ne pouvez effectuer cette action."},
+ *         "put"={"access_control" = "Vous ne pouvez effectuer cette action."}
  *     }
  *)
  *

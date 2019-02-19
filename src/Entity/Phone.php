@@ -9,9 +9,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A Phone
+ * Class Phone
  *
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={
+ *     "get"={"access_control"="object.client == user", "access_control_message" =
+ *        "Vous n'avez pas accès à la liste." }
+ *     },
+ *
+ *     itemOperations={
+ *         "get"={"access_control"="object.client == user", "access_control_message" =
+ *         "Vous n'avez pas l'autorisation d'obtenir cette information."}
+ *     }
+ * )
+ *
+ *
  * @ORM\Entity
  *
  * @Hateoas\Relation(
