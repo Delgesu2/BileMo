@@ -6,3 +6,9 @@ api_platform:
         jsonhal:  ['application/hal+json']
         json:     ['application/json']
         html:     ['text/html']
+
+    swagger:
+       api_keys:
+           apiKey:
+              name: Authorization
+              type: header

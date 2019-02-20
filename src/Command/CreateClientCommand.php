@@ -74,20 +74,20 @@ class CreateClientCommand extends Command
 
         $output->writeln('Vous allez créer un nouveau Client.');
 
-        $output->writeln('Nom : ' .$input->getArgument('name'));
+        $output->writeln('Nom : ' .$input->getArgument('username'));
 
         $output->writeln('Adresse courriel : ' .$input->getArgument('email'));
 
-        $output->writeln('Mot de passe : ' .$input->getArgument('password'));
+        $output->writeln('Mot de passe : ' .$input->getArgument('plainPassword'));
 
         $output->writeln('Numéro de téléphone : ' .$input->getArgument('phoneNumber'));
 
         // Instanciation Entity
         $client = new Client();
 
-        $client->setName($input->getArgument('name'));
+        $client->setUsername($input->getArgument('username'));
         $client->setEmail($input->getArgument('email'));
-        $client->setPassword($input->getArgument('password'));
+        $client->setPlainPassword($input->getArgument('plainPassword'));
         $client->setPhoneNumber($input->getArgument('phoneNumber'));
 
         // Persisting Entity

@@ -6,13 +6,17 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Constraints as CustomAssert;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * Class Client
  *
  * @ORM\Entity
+ * @ORM\EntityListeners({
+ *     "App\EntityListener\HashPasswordListener"
+ * })
  *
  *
  */
@@ -34,7 +38,7 @@ class Client implements UserInterface
      *
      * @Assert\NotBlank()
      */
-    private $name;
+    private $username;
 
     /**
      * @var string Client email address
@@ -47,18 +51,31 @@ class Client implements UserInterface
      */
     private $email;
 
-
     /**
-     * @var string
+     * @var  string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\NotBlank(message="Donner un mot-de-passe")
      *
      * @CustomAssert\Password
+     */
+    private $plainPassword;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255)
      *
      */
     private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $salt;
 
     /**
      * @var string CLient phone number
@@ -73,6 +90,11 @@ class Client implements UserInterface
      * @ORM\Column(type="datetime_immutable")
      */
     private $createAt;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $roles = [];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Customer", mappedBy="client", orphanRemoval=true)
@@ -98,21 +120,6 @@ class Client implements UserInterface
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return string
@@ -139,9 +146,9 @@ class Client implements UserInterface
     }
 
     /**
-     * @param string $plainPassword
+     * @param null|string $plainPassword
      */
-    public function setPlainPassword(string $plainPassword): void
+    public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
     }
@@ -160,6 +167,14 @@ class Client implements UserInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @param string $salt
+     */
+    public function setSalt(string $salt): void
+    {
+        $this->salt = $salt;
     }
 
     /**
@@ -210,14 +225,20 @@ class Client implements UserInterface
         $this->customers = $customers;
     }
 
-    public function getSalt()
+    /**
+     * @return null|string
+     */
+    public function getSalt(): ?string
     {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
-    public function getRoles()
+    /**
+     * @return array
+     */
+    public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+        return $this->roles;
     }
 
     public function eraseCredentials()
@@ -225,9 +246,19 @@ class Client implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function getUsername()
+    /**
+     * @return string
+     */
+    public function getUsername(): string
     {
-        // TODO: Implement getUsername() method.
+        return $this->username;
     }
 
+    /**
+     * @param string $username
+     */
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
 }

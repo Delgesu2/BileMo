@@ -4,7 +4,7 @@ security:
         my_database:
             entity:
                 class: App\Entity\Client
-                property: name
+                property: username
 
     encoders:
         App\Entity\Client:
@@ -22,7 +22,6 @@ security:
         login:
             pattern: ^/api/login
             stateless: true
-            anonymous: true
             json_login:
                 check_path:               /api/login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
