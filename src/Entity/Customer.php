@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
-use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,39 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ApiResource(
  *     collectionOperations={
- *        "get"={"access_control"="object.client == user", "access_control_message" =
- *        "Vous n'avez pas accès à la liste." },
- *        "post"={"access_control" = "Vous ne pouvez effectuer cette action."}
+ *        "get",
+ *        "post"
  *
  * },
  *     itemOperations={
- *         "get"={"access_control"="object.client == user", "access_control_message" =
- *         "Vous n'avez pas l'autorisation d'obtenir cette information."},
- *         "delete"={"access_control" = "Vous ne pouvez effectuer cette action."},
- *         "put"={"access_control" = "Vous ne pouvez effectuer cette action."}
+ *         "get",
+ *         "delete",
+ *         "put"
  *     }
  *)
+ *
+ * @ApiFilter(
+ *     SearchFilter::class, properties={"client": "partial"}
+ *     )
  *
  *
  * @ORM\Entity
  *
- * @Hateoas\Relation(
- *     "self",
- *     href = @Hateoas\Route(
- *         "customer_show",
- *         parameters = { "id" = "expr(object.getId())" },
- *         absolute = true
- *     )
- * )
  *
- * @Hateoas\Relation(
- *     "delete_a_customer",
- *     href = @Hateoas\Route(
- *         "customer_del",
- *         parameters = { "id" = "expr(object.getId())" },
- *         absolute = true
- *     )
- * )
  *
  */
 class Customer

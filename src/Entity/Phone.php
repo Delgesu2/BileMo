@@ -13,27 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ApiResource(
  *     collectionOperations={
- *     "get"={"access_control"="object.client == user", "access_control_message" =
- *        "Vous n'avez pas accès à la liste." }
+ *     "get"
  *     },
  *
  *     itemOperations={
- *         "get"={"access_control"="object.client == user", "access_control_message" =
- *         "Vous n'avez pas l'autorisation d'obtenir cette information."}
+ *         "get"
  *     }
  * )
  *
  *
  * @ORM\Entity
  *
- * @Hateoas\Relation(
- *     "self",
- *     href = @Hateoas\Route(
- *         "phone_show",
- *         parameters = { "id" = "expr(object.getId())" },
- *         absolute = true
- *     )
- * )
  *
  */
 class Phone

@@ -49,9 +49,9 @@ class CreateClientCommand extends Command
             // full description when running the command with "--help" option
             ->setHelp('Cette commande permet de créer un nouveau Client.')
 
-            ->addArgument('name', InputArgument::REQUIRED, 'Enter a name')
+            ->addArgument('username', InputArgument::REQUIRED, 'Enter a name')
             ->addArgument('email', InputArgument::REQUIRED, 'Enter email address')
-            ->addArgument('password', InputArgument::REQUIRED, 'Chose a password')
+            ->addArgument('plainPassword', InputArgument::REQUIRED, 'Chose a password')
             ->addArgument('phoneNumber',InputArgument::REQUIRED, 'A phone number')
             ;
     }
