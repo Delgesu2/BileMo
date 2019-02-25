@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -124,12 +125,15 @@ class Customer
     /**
      * Customer constructor.
      *
+     * @param TokenStorageInterface $tokenStorage
+     *
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->id       = Uuid::uuid4();
+        $this->id        = Uuid::uuid4();
         $this->createdAt = new \DateTimeImmutable();
+        $this->setClient($tokenStorage->getToken()->getUser()->getId());
     }
 
     /**
