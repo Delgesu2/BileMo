@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use App\Annotation\UserAware;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Customer
+ *
+ * @UserAware(userFieldName="client_id")
  *
  * @ApiResource(
  *     collectionOperations={
@@ -25,7 +29,7 @@ use Doctrine\ORM\Mapping as ORM;
  *)
  *
  * @ApiFilter(
- *     SearchFilter::class, properties={"client": "partial"}
+ *     SearchFilter::class, properties={"lastName": "exact"}
  *     )
  *
  *

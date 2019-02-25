@@ -18,3 +18,9 @@ api_platform:
     enable_swagger: true
 
     title: 'BileMo'
+
+doctrine:
+    orm:
+        filters:
+            user_filter:
+                class: App\Filter\UserFilter
