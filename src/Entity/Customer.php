@@ -35,6 +35,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  *
  * @ORM\Entity
+ * @ORM\EntityListeners({
+ *     "App\EntityListener\UserClientSetterListener"
+ * })
  *
  *
  *
@@ -125,15 +128,12 @@ class Customer
     /**
      * Customer constructor.
      *
-     * @param TokenStorageInterface $tokenStorage
-     *
      * @throws \Exception
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct()
     {
         $this->id        = Uuid::uuid4();
         $this->createdAt = new \DateTimeImmutable();
-        $this->setClient($tokenStorage->getToken()->getUser()->getId());
     }
 
     /**
@@ -275,7 +275,7 @@ class Customer
     /**
      * @return Client
      */
-    public function getClient(): Client
+    public function getClient(): ?Client
     {
         return $this->client;
     }
