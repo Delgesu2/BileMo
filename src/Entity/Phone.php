@@ -6,6 +6,7 @@ use Ramsey\Uuid\Uuid;
 use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,14 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ApiResource(
  *     collectionOperations={
- *     "get"
+ *     "get"={
+ *          "normalization_context"={"groups"={"list"}}}
  *     },
  *
  *     itemOperations={
- *         "get"
+ *         "get"={
+ *              "normalization_context"={"groups"={"detail"}}}
  *     }
  * )
- *
  *
  * @ORM\Entity
  *
@@ -34,6 +36,7 @@ class Phone
      * @ORM\Id()
      * @ORM\Column(type="guid")
      *
+     * @Groups({"detail", "list"})
      */
     private $id;
 
@@ -43,6 +46,8 @@ class Phone
      * @ORM\Column(type="string", length=60)
      *
      * @Assert\NotBlank()
+     *
+     * @Groups({"detail", "list"})
      */
     private $brand;
 
@@ -52,6 +57,8 @@ class Phone
      * @ORM\Column(type="string", length=100)
      *
      * @Assert\NotBlank()
+     *
+     * @Groups({"detail", "list"})
      */
     private $reference;
 
@@ -59,6 +66,8 @@ class Phone
      * @var string Phone description
      *
      * @ORM\Column(type="string", length=200)
+     *
+     * @Groups({"detail"})
      */
     private $description;
 
@@ -68,6 +77,8 @@ class Phone
      * @ORM\Column(type="string", length=7)
      *
      * @Assert\NotBlank()
+     *
+     * @Groups({"detail", "list"})
      */
     private $price;
 

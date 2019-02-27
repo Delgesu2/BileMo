@@ -13,11 +13,11 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class UserClientSetterListener
+ * Class CustomerClientSetterListener
  *
  * @package App\EntityListener
  */
-class UserClientSetterListener
+class CustomerClientSetterListener
 {
     /**
      * @var TokenStorageInterface
@@ -25,7 +25,7 @@ class UserClientSetterListener
     private $tokenStorage;
 
     /**
-     * UserClientSetterListener constructor.
+     * CustomerClientSetterListener constructor.
      *
      * @param TokenStorageInterface $tokenStorage
      */

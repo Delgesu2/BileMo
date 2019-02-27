@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Annotation\UserAware;
+use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,12 +20,13 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ApiResource(
  *     collectionOperations={
- *        "get",
+ *        "get"={
+ *             "normalization_context"={"groups"={"list"}}},
  *        "post"
- *
  * },
  *     itemOperations={
- *         "get",
+ *         "get"={
+ *              "normalization_context"={"groups"={"detail"}}},
  *         "delete",
  *         "put"
  *     }
@@ -33,12 +36,19 @@ use Doctrine\ORM\Mapping as ORM;
  *     SearchFilter::class, properties={"lastName": "exact"}
  *     )
  *
+ * @Hateoas\Relation(
+ *     "delete",
+ *     href = @Hateoas\Route(
+ *     "app_customer_delete",
+ *     parameters = { "id" = "expr(object.getId())" },
+ *     absolute = true
+ *     )
+ * )
  *
  * @ORM\Entity
  * @ORM\EntityListeners({
- *     "App\EntityListener\UserClientSetterListener"
+ *     "App\EntityListener\CustomerClientSetterListener"
  * })
- *
  *
  *
  */
@@ -50,6 +60,8 @@ class Customer
      * @ORM\Id
      * @ORM\Column(type="guid")
      *
+     * @Groups({"detail", "list"})
+     *
      */
     private $id;
 
@@ -57,6 +69,8 @@ class Customer
      * @var string Customer First Name
      *
      * @ORM\Column(type="string", length=40, unique=false)
+     *
+     * @Groups({"detail", "list"})
      */
     private $firstName;
 
@@ -66,6 +80,8 @@ class Customer
      * @ORM\Column(type="string", length=60, unique=false)
      *
      * @Assert\NotBlank(message="Il faut renseigner au minimum le nom de famille")
+     *
+     * @Groups({"detail", "list"})
      */
     private $lastName;
 
@@ -73,6 +89,8 @@ class Customer
      * @var string Customer address
      *
      * @ORM\Column(type="string", length=80)
+     *
+     * @Groups({"detail"})
      */
     private $address;
 
@@ -80,6 +98,8 @@ class Customer
      * @var string Customer's adress zipcode
      *
      * @ORM\Column(type="string", length=15)
+     *
+     * @Groups({"detail"})
      */
     private $zipcode;
 
@@ -89,6 +109,8 @@ class Customer
      * @ORM\Column(type="string", length=50)
      *
      * @Assert\NotBlank()
+     *
+     * @Groups({"detail"})
      */
     private $city;
 
@@ -98,6 +120,8 @@ class Customer
      * @ORM\Column(type="string", length=25)
      *
      * @Assert\NotBlank()
+     *
+     * @Groups({"detail"})
      */
     private $phoneNumber;
 
@@ -107,6 +131,8 @@ class Customer
      * @ORM\Column(type="string", length=40)
      *
      * @Assert\Email(message="Adresse courriel non valide.")
+     *
+     * @Groups({"detail", "list"})
      */
     private $email;
 
@@ -114,6 +140,8 @@ class Customer
      * @var \DateTimeInterface When the customer entity has been created
      *
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @Groups({"detail", "list"})
      */
     private $createdAt;
 
@@ -122,6 +150,7 @@ class Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="customers")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     *
      */
     private $client;
 
