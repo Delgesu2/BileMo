@@ -20,16 +20,15 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ApiResource(
  *     collectionOperations={
- *        "get"={
- *             "normalization_context"={"groups"={"list"}}},
+ *        "get",
  *        "post"
  * },
  *     itemOperations={
- *         "get"={
- *              "normalization_context"={"groups"={"detail"}}},
+ *         "get",
  *         "delete",
  *         "put"
- *     }
+ *     },
+ *     attributes={"normalization_context"={"groups"={"get"}}}
  *)
  *
  * @ApiFilter(
@@ -60,7 +59,7 @@ class Customer
      * @ORM\Id
      * @ORM\Column(type="guid")
      *
-     * @Groups({"detail", "list"})
+     * @Groups({"get"})
      *
      */
     private $id;
@@ -70,7 +69,7 @@ class Customer
      *
      * @ORM\Column(type="string", length=40, unique=false)
      *
-     * @Groups({"detail", "list"})
+     * @Groups({"get"})
      */
     private $firstName;
 
@@ -81,7 +80,7 @@ class Customer
      *
      * @Assert\NotBlank(message="Il faut renseigner au minimum le nom de famille")
      *
-     * @Groups({"detail", "list"})
+     * @Groups({"get"})
      */
     private $lastName;
 
@@ -90,7 +89,7 @@ class Customer
      *
      * @ORM\Column(type="string", length=80)
      *
-     * @Groups({"detail"})
+     * @Groups({"get"})
      */
     private $address;
 
@@ -99,7 +98,7 @@ class Customer
      *
      * @ORM\Column(type="string", length=15)
      *
-     * @Groups({"detail"})
+     * @Groups({"get"})
      */
     private $zipcode;
 
@@ -110,7 +109,7 @@ class Customer
      *
      * @Assert\NotBlank()
      *
-     * @Groups({"detail"})
+     * @Groups({"get"})
      */
     private $city;
 
@@ -121,7 +120,7 @@ class Customer
      *
      * @Assert\NotBlank()
      *
-     * @Groups({"detail"})
+     * @Groups({"get"})
      */
     private $phoneNumber;
 
@@ -132,7 +131,7 @@ class Customer
      *
      * @Assert\Email(message="Adresse courriel non valide.")
      *
-     * @Groups({"detail", "list"})
+     * @Groups({"get"})
      */
     private $email;
 
@@ -141,7 +140,7 @@ class Customer
      *
      * @ORM\Column(type="datetime_immutable")
      *
-     * @Groups({"detail", "list"})
+     * @Groups({"get"})
      */
     private $createdAt;
 
@@ -150,7 +149,6 @@ class Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="customers")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
-     *
      */
     private $client;
 

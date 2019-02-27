@@ -17,6 +17,10 @@ api_platform:
 
     enable_swagger: true
 
+    collection:
+        pagination:
+            items_per_page: 5
+
     title: 'BileMo'
 
 doctrine:
