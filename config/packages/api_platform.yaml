@@ -21,7 +21,21 @@ api_platform:
         pagination:
             items_per_page: 5
 
+    http_cache:
+        etag: true
+        invalidation:
+            enabled: true
+            varnish_urls: ['%env(VARNISH_URL)%']
+        max_age: 3600
+
+    exception_to_status:
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+
     title: 'BileMo'
+
+    description: 'Web service exposing a business to business API'
+
+    version: '1.0.0'
 
 doctrine:
     orm:
