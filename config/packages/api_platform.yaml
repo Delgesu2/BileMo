@@ -25,7 +25,7 @@ api_platform:
         etag: true
         invalidation:
             enabled: true
-            varnish_urls: ['%env(VARNISH_URL)%']
+            #varnish_urls: ['%env(VARNISH_URL)%']
         max_age: 3600
 
     exception_to_status:
