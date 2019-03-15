@@ -23,10 +23,13 @@ api_platform:
 
     http_cache:
         etag: true
-        invalidation:
-            enabled: true
+     #  invalidation:
+      #      enabled: true
             #varnish_urls: ['%env(VARNISH_URL)%']
-        max_age: 3600
+        max_age: 0
+        shared_max_age: 3600
+        vary: ['Content-Type', 'Authorization']
+        public: true
 
     exception_to_status:
         Symfony\Component\Serializer\Exception\ExceptionInterface: 400

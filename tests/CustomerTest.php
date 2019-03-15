@@ -17,15 +17,15 @@ class CustomerTest extends WebTestCase
      *
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
-    protected function createAuthenticatedClient($username = 'user', $password = 'password')
+    protected function createAuthenticatedClient($username = 'Xavier', $password = 'Mot2passe')
     {
         $client = static::createClient();
         $client->request(
             'POST',
             '/api/login_check',
             array(
-                'username' => $username,
-                'password' => $password,
+                'Xavier' => $username,
+                'Mot2passe' => $password,
             )
         );
 
@@ -43,7 +43,7 @@ class CustomerTest extends WebTestCase
     public function testCustomers()
     {
         $client = $this->createAuthenticatedClient();
-        $client->request('GET', 'api/customers');
+        $client->request('GET', '/api/customers');
 
     }
 
