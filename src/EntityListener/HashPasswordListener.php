@@ -37,7 +37,6 @@ class HashPasswordListener
 
     /**
      * @param Client $client
-     * @param LifecycleEventArgs $eventArgs
      *
      * @throws \Exception
      */

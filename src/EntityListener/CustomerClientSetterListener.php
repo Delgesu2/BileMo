@@ -36,8 +36,6 @@ class CustomerClientSetterListener
 
     /**
      * @param Customer $customer
-     *
-     * @param LifecycleEventArgs $eventArgs
      */
     public function prePersist(Customer $customer)
     {
