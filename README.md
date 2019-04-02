@@ -1,5 +1,8 @@
 BileMo API
 ==========
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/79a4a7135dc04561bac89dcf674d7fe2)](https://app.codacy.com/app/Delgesu2/BileMo?utm_source=github.com&utm_medium=referral&utm_content=Delgesu2/BileMo&utm_campaign=Badge_Grade_Dashboard)
+
 Web service exposing an API
 
 *Téléchargez ce projet ou clonez-le (Git clone)*
