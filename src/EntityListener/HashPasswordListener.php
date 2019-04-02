@@ -41,7 +41,7 @@ class HashPasswordListener
      *
      * @throws \Exception
      */
-    public function prePersist(Client $client, LifecycleEventArgs $eventArgs): void
+    public function prePersist(Client $client): void
     {
         $client->setSalt(uniqid(mt_rand(), true));
 

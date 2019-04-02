@@ -18,7 +18,7 @@ final class UserFilterConfigurator
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
 
     /**
      * @var TokenStorageInterface
@@ -33,13 +33,13 @@ final class UserFilterConfigurator
     /**
      * UserFilterConfigurator constructor.
      *
-     * @param ObjectManager $em
+     * @param ObjectManager $entityManager
      * @param TokenStorageInterface $tokenStorage
      * @param Reader $reader
      */
-    public function __construct(ObjectManager $em, TokenStorageInterface $tokenStorage, Reader $reader)
+    public function __construct(ObjectManager $entityManager, TokenStorageInterface $tokenStorage, Reader $reader)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
         $this->reader = $reader;
     }
@@ -53,7 +53,7 @@ final class UserFilterConfigurator
             throw new \RuntimeException('There is no authenticated user.');
         }
 
-        $filter = $this->em->getFilters()->enable('user_filter');
+        $filter = $this->entityManager->getFilters()->enable('user_filter');
         $filter->setParameter('id', $user->getId());
         $filter->setAnnotationReader($this->reader);
     }

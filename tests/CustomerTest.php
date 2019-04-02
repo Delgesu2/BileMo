@@ -13,11 +13,11 @@ class CustomerTest extends WebTestCase
 {
     /**
      * @param string $username
-     * @param string $password
+     * @param string $plainPassword
      *
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
-    protected function createAuthenticatedClient($username = 'Xavier', $password = 'Mot2passe')
+    protected function createAuthenticatedClient($username = 'Xavier', $plainPassword = 'Mot2passe')
     {
         $client = static::createClient();
         $client->request(
@@ -25,7 +25,7 @@ class CustomerTest extends WebTestCase
             '/api/login_check',
             array(
                 'Xavier' => $username,
-                'Mot2passe' => $password,
+                'Mot2passe' => $plainPassword,
             )
         );
 

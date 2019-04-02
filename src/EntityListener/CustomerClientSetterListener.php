@@ -39,7 +39,7 @@ class CustomerClientSetterListener
      *
      * @param LifecycleEventArgs $eventArgs
      */
-    public function prePersist(Customer $customer, LifecycleEventArgs $eventArgs)
+    public function prePersist(Customer $customer)
     {
         $customer->setClient($this->tokenStorage->getToken()->getUser());
     }
